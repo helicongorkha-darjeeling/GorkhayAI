@@ -8,7 +8,7 @@ export const site = {
   location: "Darjeeling, West Bengal, India",
   // Digits only, with country code, e.g. 919800000000. Set in Vercel env.
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@gorkhayai.com",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "ceo@gorkhayai.com",
   caseStudyUrl: "https://mainalihospitality.com",
 } as const;
 

@@ -1,5 +1,13 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
+const shipLog = [
+  { name: "Hills Tour and Travels", kind: "Tourism" },
+  { name: "Homestay Samaj", kind: "Homestays" },
+  { name: "Lamahata High School", kind: "Education" },
+  { name: "Bishwakarma Samaj", kind: "Community" },
+  { name: "AI for Students", kind: "AI" },
+];
+
 export function About() {
   return (
     <section id="about" aria-labelledby="about-title" className="scroll-mt-20 py-24 md:py-36">
@@ -30,18 +38,28 @@ export function About() {
           />
           <div className="mt-6 space-y-5 text-lg leading-relaxed text-mist">
             <p>
-              GorkhayAI is run by Upesh Bishwakarma from Darjeeling. Upesh started the studio after seeing how many
-              good hotels and homestays in the hills lose guests to missed calls and outdated websites.
+              GorkhayAI is run by Upesh Bishwakarma, a self-taught AI builder from Lamahatta, Darjeeling. Upesh builds
+              practical infrastructure for remote communities: websites, homestay systems, tourism platforms and AI
+              tools that work for the people who live and host here.
             </p>
             <p>
-              We combine modern web design with practical AI: tools that answer guests, capture every enquiry and fit
-              how a family-run property actually works. We stay with you after launch, too. Every client gets monthly
-              care and training, not just a handover.
+              Every project starts from understanding people, not templates. That is how we work with hotels and
+              homestays too. We build the system, stay with you every month, and train your team to use it.
             </p>
+          </div>
+          <div className="mt-10">
+            <p className="text-xs uppercase tracking-[0.18em] text-haze">Also built in the hills</p>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {shipLog.map((p) => (
+                <li key={p.name} className="rounded-full border border-white/10 px-3.5 py-1.5 text-sm text-mist">
+                  {p.name} <span className="text-haze">· {p.kind}</span>
+                </li>
+              ))}
+            </ul>
           </div>
           <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-white/10 pt-8">
             {[
-              ["Based in", "Darjeeling"],
+              ["Based in", "Lamahatta"],
               ["Focus", "Hotels & homestays"],
               ["Support", "Monthly"],
             ].map(([k, v]) => (
