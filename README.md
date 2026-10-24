@@ -24,7 +24,7 @@ npm run dev
 | `SUPABASE_URL` | GorkhayAI Supabase project URL. |
 | `SUPABASE_ANON_KEY` | Publishable / anon key. Row Level Security only lets it insert leads. |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Digits with country code, e.g. `919800000000`. |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | Shown on the email button. Defaults to `hello@gorkhayai.com`. |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Shown on the email button. Defaults to `ceo@gorkhayai.com`. |
 
 Until the Supabase variables are set, the form returns a friendly "please WhatsApp or email us" message instead of saving.
 
@@ -62,4 +62,4 @@ Posts appear on the home page grid, `/insights`, the sitemap, and get their own 
 
 - Prices: `Starting from ₹____` in `components/sections/Services.tsx`
 - WhatsApp number and contact email (env vars above)
-- Founder photo and bio in `components/sections/About.tsx`
+- Founder photo in `components/sections/About.tsx`
