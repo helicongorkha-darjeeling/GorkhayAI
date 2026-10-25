@@ -113,6 +113,17 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-y-0 left-0 w-full bg-gradient-to-r from-night/80 via-night/20 to-transparent md:w-2/3" />
 
       <div data-hero-copy className="container-x relative z-10">
+        <a
+          href="#work"
+          className="hero-reveal group mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-2 pr-4 text-sm text-mist backdrop-blur-md transition-colors hover:border-ember/40 hover:text-snow"
+        >
+          <span className="relative flex h-2 w-2" aria-hidden="true">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:hidden" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          Now live: Hotel Teesta, Darjeeling
+          <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">→</span>
+        </a>
         <p className="hero-reveal eyebrow">
           AI studio · Darjeeling, India
         </p>

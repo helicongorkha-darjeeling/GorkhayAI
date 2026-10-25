@@ -4,8 +4,8 @@ import { ContactForm } from "./ContactForm";
 
 export function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="relative scroll-mt-20 overflow-hidden bg-navy-900 py-24 md:py-36">
-      <div aria-hidden="true" className="pointer-events-none absolute -left-40 bottom-0 h-[420px] w-[420px] rounded-full bg-ember/10 blur-[120px]" />
+    <section id="contact" aria-labelledby="contact-title" className="relative scroll-mt-20 overflow-hidden band py-24 md:py-36">
+      <div aria-hidden="true" className="pointer-events-none absolute -left-40 bottom-1/4 h-[420px] w-[420px] rounded-full bg-ember/10 blur-[120px]" />
       <div className="container-x relative grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeading

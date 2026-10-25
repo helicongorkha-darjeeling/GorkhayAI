@@ -3,7 +3,7 @@ import { formatDate, type PostMeta } from "@/lib/content";
 
 export function PostCard({ post }: { post: PostMeta }) {
   return (
-    <article className="group relative flex h-full flex-col rounded-3xl border border-white/10 bg-navy-900 p-6 transition-colors hover:border-ember/50 md:p-7">
+    <article className="group relative flex h-full flex-col rounded-3xl border border-white/10 bg-night/60 p-6 transition-colors hover:border-ember/50 md:p-7">
       <div className="flex items-center gap-3 text-xs">
         <span className={`rounded-full px-2.5 py-1 font-semibold ${post.category === "Tool review" ? "bg-ember/15 text-ember-soft" : "bg-white/8 text-mist"}`}>
           {post.category}

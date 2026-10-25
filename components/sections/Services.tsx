@@ -30,8 +30,8 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" aria-labelledby="services-title" className="relative scroll-mt-20 overflow-hidden bg-navy-900 py-24 md:py-36">
-      <div aria-hidden="true" className="pointer-events-none absolute -right-40 top-0 h-[480px] w-[480px] rounded-full bg-ember/10 blur-[120px]" />
+    <section id="services" aria-labelledby="services-title" className="relative scroll-mt-20 overflow-hidden band py-24 md:py-36">
+      <div aria-hidden="true" className="pointer-events-none absolute -right-40 top-1/4 h-[480px] w-[480px] rounded-full bg-ember/10 blur-[120px]" />
       <div className="container-x relative">
         <SectionHeading
           id="services-title"
@@ -42,9 +42,9 @@ export function Services() {
 
         <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s, i) => (
-            <li key={s.name} className="h-full">
+            <li key={s.name} className="reveal h-full">
               <TiltCard className="h-full rounded-3xl">
-                <article className="glass flex h-full flex-col rounded-3xl p-6" style={{ transform: "translateZ(30px)" }}>
+                <article className="glass flex h-full flex-col rounded-3xl p-6 transition-colors duration-300 hover:border-ember/40" style={{ transform: "translateZ(30px)" }}>
                   <div className="flex items-center justify-between">
                     <span className="grid h-12 w-12 place-items-center rounded-2xl bg-ember/12 text-ember">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
