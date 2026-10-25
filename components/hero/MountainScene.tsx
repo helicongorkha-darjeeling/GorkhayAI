@@ -8,6 +8,7 @@ import { heroStore } from "@/lib/heroStore";
 
 const MODEL_URL = "/models/kanchenjunga.glb";
 const DRACO_PATH = "/draco/";
+const SUN_DIR = new THREE.Vector3(0.75, 0.12, -0.65);
 
 /* ------------------------------------------------------------------ Sky -- */
 
@@ -63,16 +64,39 @@ function Sky({ sunDir }: { sunDir: THREE.Vector3 }) {
 
 function Range() {
   const { scene } = useGLTF(MODEL_URL, DRACO_PATH);
-  const material = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        vertexColors: true,
-        flatShading: true,
-        roughness: 0.92,
-        metalness: 0,
-      }),
-    [],
-  );
+  const material = useMemo(() => {
+    const m = new THREE.MeshStandardMaterial({
+      vertexColors: true,
+      flatShading: true,
+      roughness: 0.92,
+      metalness: 0,
+    });
+    // Alpenglow: the summits catch first light before the valleys do. Slopes
+    // facing the low sun are graded warmer with height; the valleys stay blue.
+    m.onBeforeCompile = (shader) => {
+      shader.vertexShader = shader.vertexShader
+        .replace("#include <common>", "#include <common>\nvarying vec3 vWorldPos;\nvarying vec3 vWorldNormal;")
+        .replace(
+          "#include <worldpos_vertex>",
+          "#include <worldpos_vertex>\nvWorldPos = (modelMatrix * vec4(transformed, 1.0)).xyz;\nvWorldNormal = normalize(mat3(modelMatrix) * objectNormal);",
+        );
+      shader.fragmentShader = shader.fragmentShader
+        .replace(
+          "#include <common>",
+          "#include <common>\nvarying vec3 vWorldPos;\nvarying vec3 vWorldNormal;",
+        )
+        .replace(
+          "#include <opaque_fragment>",
+          `float glowH = smoothstep(7.0, 26.0, vWorldPos.y);
+          float facing = clamp(dot(normalize(vWorldNormal), normalize(vec3(0.85, 0.35, 0.4))), 0.0, 1.0);
+          vec3 glowCol = mix(vec3(1.0, 0.42, 0.45), vec3(1.0, 0.70, 0.45), glowH);
+          float k = glowH * (0.35 + 0.65 * facing);
+          outgoingLight = mix(outgoingLight, outgoingLight * vec3(1.65, 0.88, 0.7) + glowCol * 0.16, k);
+          #include <opaque_fragment>`,
+        );
+    };
+    return m;
+  }, []);
 
   useEffect(() => {
     scene.traverse((obj) => {
@@ -304,8 +328,6 @@ function CameraRig() {
 
 /* ---------------------------------------------------------------- Scene -- */
 
-const SUN_DIR = new THREE.Vector3(0.75, 0.12, -0.65);
-
 /** Fires once a few frames after the model is on screen, so the poster can fade out. */
 function ReadySignal({ onReady }: { onReady: () => void }) {
   const frames = useRef(0);
@@ -319,11 +341,11 @@ function ReadySignal({ onReady }: { onReady: () => void }) {
 export function MountainScene({ particleCount, onReady }: { particleCount: number; onReady: () => void }) {
   return (
     <>
-      <fogExp2 attach="fog" args={["#1b2747", 0.0095]} />
+      <fogExp2 attach="fog" args={["#1b2747", 0.0062]} />
       <Sky sunDir={SUN_DIR} />
       <hemisphereLight args={["#5d74ad", "#0a1428", 0.5]} />
       {/* Alpenglow: a low, warm key light raking the east faces. */}
-      <directionalLight position={[90, 24, 25]} intensity={4.4} color="#ffb08f" />
+      <directionalLight position={[90, 18, 20]} intensity={4.8} color="#ffa985" />
       <directionalLight position={[-60, 40, 40]} intensity={0.35} color="#9db4ff" />
       <Range />
       <FogBanks />

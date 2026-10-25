@@ -10,20 +10,38 @@ const shipLog = [
 
 export function About() {
   return (
-    <section id="about" aria-labelledby="about-title" className="scroll-mt-20 py-24 md:py-36">
+    <section id="about" aria-labelledby="about-title" className="scroll-mt-20 overflow-hidden py-24 md:py-36">
       <div className="container-x grid items-center gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
-        <figure className="relative mx-auto w-full max-w-sm">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(ellipse_at_60%_10%,#ffb37f33,transparent_55%),linear-gradient(180deg,#1a2a4d,#050b18)]">
+        <figure className="reveal relative mx-auto w-full max-w-sm">
+          <div aria-hidden="true" className="absolute -inset-6 rounded-[2.5rem] bg-ember/10 blur-3xl" />
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,#0a1428,#1a2a4d_55%,#2a2440_75%,#050b18)]">
             {/* Swap for a portrait: public/about/upesh.webp */}
-            <svg viewBox="0 0 400 500" className="absolute inset-0 h-full w-full" aria-hidden="true">
-              <path d="M0 380 L90 300 L140 330 L230 240 L280 280 L400 200 L400 500 L0 500Z" fill="#0a1428" />
-              <path d="M230 240 L250 258 L238 262 L226 252Z M400 200 L380 214 L392 218Z" fill="#f4f7fb" opacity="0.7" />
+            <svg viewBox="0 0 400 500" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+              <defs>
+                <radialGradient id="about-sun" cx="0.7" cy="0.62" r="0.45">
+                  <stop offset="0" stopColor="#ffb37f" stopOpacity="0.55" />
+                  <stop offset="0.5" stopColor="#ff8a3d" stopOpacity="0.12" />
+                  <stop offset="1" stopColor="#ff8a3d" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              <rect width="400" height="500" fill="url(#about-sun)" />
+              <path d="M0 330 L70 280 L120 300 L210 205 L250 235 L300 190 L400 270 L400 500 L0 500Z" fill="#22355f" />
+              <path d="M210 205 L232 224 L218 226 L206 216 L196 222Z M300 190 L322 208 L308 206 L298 214 L290 202Z" fill="#f4f7fb" opacity="0.85" />
+              <path d="M0 380 L90 330 L150 352 L240 300 L320 340 L400 310 L400 500 L0 500Z" fill="#101d38" />
+              <path d="M0 430 L110 400 L200 420 L300 392 L400 420 L400 500 L0 500Z" fill="#050b18" />
             </svg>
-            <span className="absolute inset-0 grid place-items-center font-display text-8xl text-snow/90" aria-hidden="true">
-              UB
-            </span>
+            <div className="absolute inset-x-0 top-0 p-8">
+              <span className="font-display text-7xl leading-none text-snow" aria-hidden="true">
+                UB
+              </span>
+              <span className="mt-3 block h-px w-12 bg-ember" aria-hidden="true" />
+            </div>
+            <div className="absolute inset-x-0 bottom-0 p-8">
+              <p className="text-xs uppercase tracking-[0.22em] text-haze">Founder</p>
+              <p className="mt-1 font-display text-2xl text-snow">Upesh Bishwakarma</p>
+            </div>
           </div>
-          <figcaption className="mt-4 text-center text-sm text-haze">Upesh Bishwakarma, founder</figcaption>
+          <figcaption className="sr-only">Upesh Bishwakarma, founder of GorkhayAI</figcaption>
         </figure>
 
         <div>

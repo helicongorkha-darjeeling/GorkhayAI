@@ -22,13 +22,17 @@ const steps = [
   },
 ];
 
-// A trekking route from base camp to summit. The three camps mark the steps.
-const TRAIL = "M20 300 C 90 290, 120 230, 170 220 S 260 200, 290 150 S 350 70, 420 40";
+// A trekking route from base camp to summit. The three camps mark the steps
+// and sit on the ridge line drawn below.
+const TRAIL = "M34 292 C 80 286, 112 250, 150 238 S 222 214, 252 176 S 318 120, 352 98 S 392 62, 404 50";
 const CAMPS = [
-  { x: 20, y: 300 },
-  { x: 290, y: 150 },
-  { x: 420, y: 40 },
+  { x: 34, y: 292 },
+  { x: 252, y: 176 },
+  { x: 404, y: 50 },
 ];
+const RIDGE_FAR = "M-40 260 L60 210 L110 228 L190 160 L240 186 L330 120 L380 150 L440 110 L500 190 L560 320 L-40 320Z";
+const RIDGE = "M-40 320 L-40 310 L60 270 L118 226 L160 246 L262 150 L300 170 L404 40 L452 104 L500 190 L560 320Z";
+const SNOW = "M262 150 L282 162 L270 166 L258 158 L250 164Z M404 40 L424 68 L410 64 L400 72 L392 58Z";
 
 export function HowItWorks() {
   const root = useRef<HTMLElement>(null);
@@ -79,24 +83,44 @@ export function HowItWorks() {
           <SectionHeading id="process-title" eyebrow="How it works" title="Three steps to the summit" />
 
           <div className="mt-12 grid items-center gap-12 md:grid-cols-2">
-            <svg viewBox="0 0 440 320" className="hidden w-full md:block" aria-hidden="true">
+            <svg viewBox="0 0 440 320" className="hidden w-full overflow-visible md:block" aria-hidden="true">
               <defs>
                 <linearGradient id="ridge" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor="#1a2a4d" />
+                  <stop offset="0" stopColor="#22355f" />
                   <stop offset="1" stopColor="#050b18" />
                 </linearGradient>
+                <linearGradient id="ridge-far" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor="#14213f" />
+                  <stop offset="1" stopColor="#050b18" />
+                </linearGradient>
+                <radialGradient id="dawn">
+                  <stop offset="0" stopColor="#ff8a3d" stopOpacity="0.28" />
+                  <stop offset="1" stopColor="#ff8a3d" stopOpacity="0" />
+                </radialGradient>
+                <linearGradient id="fade-b" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0.6" stopColor="#fff" />
+                  <stop offset="1" stopColor="#000" />
+                </linearGradient>
+                <mask id="fade" maskUnits="userSpaceOnUse" x="-60" y="-20" width="640" height="340">
+                  <rect x="-60" y="-20" width="640" height="340" fill="url(#fade-b)" />
+                </mask>
               </defs>
-              <path d="M0 320 L120 200 L170 230 L300 110 L340 140 L420 30 L440 50 L440 320 Z" fill="url(#ridge)" />
-              <path d="M300 110 L320 125 L310 128 L298 120 Z M420 30 L432 42 L418 44 Z" fill="#f4f7fb" opacity="0.8" />
-              <path d={TRAIL} fill="none" stroke="#2a3d66" strokeWidth="2" strokeDasharray="4 6" />
+              <circle cx="390" cy="120" r="170" fill="url(#dawn)" />
+              <g mask="url(#fade)">
+                <path d={RIDGE_FAR} fill="url(#ridge-far)" />
+                <path d={RIDGE} fill="url(#ridge)" />
+                <path d={SNOW} fill="#f4f7fb" opacity="0.85" />
+              </g>
+              <path d={TRAIL} fill="none" stroke="#2a3d66" strokeWidth="2" strokeDasharray="3 6" strokeLinecap="round" />
               <path data-trail d={TRAIL} fill="none" stroke="#ff8a3d" strokeWidth="3" strokeLinecap="round" />
               {CAMPS.map((c, i) => (
                 <g key={i} data-camp transform={`translate(${c.x} ${c.y})`}>
+                  <circle r="16" fill="#ff8a3d" opacity="0.12" />
                   <circle r="10" fill="#050b18" stroke="#ff8a3d" strokeWidth="2" />
                   <text y="4" textAnchor="middle" fontSize="10" fill="#f4f7fb" fontWeight="700">
                     {i + 1}
                   </text>
-                  <text x={i === 2 ? -16 : 16} y={i === 2 ? 4 : -14} textAnchor={i === 2 ? "end" : "start"} fontSize="12" fill="#b9c5da">
+                  <text x={i === 0 ? 0 : -20} y={i === 0 ? 30 : 5} textAnchor={i === 0 ? "start" : "end"} fontSize="13" fontWeight="600" fill="#f4f7fb">
                     {steps[i].name}
                   </text>
                 </g>

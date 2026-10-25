@@ -171,7 +171,7 @@ export function ContactForm() {
         <p id={`${id}-note`} className="text-xs text-haze">
           Add a phone number or email so we can reply. We never share your details.
         </p>
-        <button type="submit" className="btn btn-primary" disabled={status.state === "sending"}>
+        <button type="submit" className="btn btn-primary shrink-0 whitespace-nowrap" disabled={status.state === "sending"}>
           {status.state === "sending" ? "Sending…" : "Send enquiry"}
         </button>
       </div>

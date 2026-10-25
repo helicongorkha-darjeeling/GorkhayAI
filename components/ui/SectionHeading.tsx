@@ -12,7 +12,7 @@ export function SectionHeading({
   align?: "left" | "center";
 }) {
   return (
-    <div className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
+    <div className={align === "center" ? "reveal mx-auto max-w-2xl text-center" : "reveal max-w-2xl"}>
       <p className="eyebrow">{eyebrow}</p>
       <h2 id={id} className="h-display mt-4 text-4xl md:text-5xl">
         {title}

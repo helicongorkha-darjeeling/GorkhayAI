@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 80],
     // Live screenshot of the Hotel Teesta site for the case study.
     remotePatterns: [
       { protocol: "https", hostname: "api.microlink.io" },

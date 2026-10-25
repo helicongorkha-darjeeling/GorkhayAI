@@ -80,6 +80,17 @@
   }
 }
 
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @layer components {
   .container-x {
     margin-inline: auto;
@@ -136,9 +147,15 @@
   .btn-primary {
     background: var(--color-ember);
     color: var(--color-night);
+    box-shadow:
+      0 0 0 1px rgb(255 138 61 / 0.4),
+      0 12px 32px -12px rgb(255 138 61 / 0.7);
   }
   .btn-primary:hover {
     background: var(--color-ember-soft);
+    box-shadow:
+      0 0 0 1px rgb(255 179 127 / 0.5),
+      0 16px 40px -12px rgb(255 138 61 / 0.85);
   }
   .btn-ghost {
     border: 1px solid rgb(244 247 251 / 0.3);
@@ -147,6 +164,35 @@
   .btn-ghost:hover {
     border-color: var(--color-snow);
     background: rgb(244 247 251 / 0.06);
+  }
+
+  /* A lighter band of navy that fades in and out, so sections never meet at a hard line. */
+  .band {
+    background: linear-gradient(
+      180deg,
+      var(--color-night) 0%,
+      var(--color-navy-900) 14%,
+      var(--color-navy-900) 86%,
+      var(--color-night) 100%
+    );
+  }
+
+  /* Hairline with a warm centre, used between sections. */
+  .rule-glow {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(255 138 61 / 0.35), transparent);
+  }
+
+  /* Scroll-linked reveal with no JavaScript. Browsers without scroll timelines
+     simply show the content. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        animation: reveal-up linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 55%;
+      }
+    }
   }
 
   .grain::after {
