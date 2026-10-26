@@ -26,7 +26,7 @@ npm run dev
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Digits with country code, e.g. `919800000000`. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Shown on the email button. Defaults to `ceo@gorkhayai.com`. |
 
-Until the Supabase variables are set, the form returns a friendly "please WhatsApp or email us" message instead of saving.
+Until the Supabase variables are set, the form still works: after the last step it hands the visitor a ready-written email (and WhatsApp message, once the number is set) with everything they entered, so no enquiry is lost.
 
 ## Leads table
 
@@ -60,6 +60,6 @@ Posts appear on the home page grid, `/insights`, the sitemap, and get their own 
 
 ## Placeholders to fill before launch
 
-- Prices: `Starting from ₹____` in `components/sections/Services.tsx`
-- WhatsApp number and contact email (env vars above)
+- Prices live in `lib/pricing.ts` (cards, the form's budget estimate and everything else read from there). They exclude GST.
+- WhatsApp number and contact email (env vars above). WhatsApp buttons stay hidden until `NEXT_PUBLIC_WHATSAPP_NUMBER` is set.
 - Founder photo in `components/sections/About.tsx`

@@ -10,10 +10,18 @@ create table if not exists public.leads (
   property_type text check (property_type is null or property_type in ('hotel', 'homestay', 'resort', 'other')),
   interest text[] not null default '{}',
   message text check (message is null or char_length(message) <= 2000),
+  rooms text check (rooms is null or rooms in ('1–5', '6–15', '16–40', '40+')),
+  preferred_contact text check (preferred_contact is null or preferred_contact in ('WhatsApp', 'Phone call', 'Email')),
+  timeline text check (timeline is null or timeline in ('As soon as possible', 'In 1–3 months', 'Just exploring')),
   source text not null default 'website',
   contacted boolean not null default false,
   constraint leads_contact_present check (email is not null or phone is not null)
 );
+
+-- Columns added with the step-by-step form (safe to re-run on an older table).
+alter table public.leads add column if not exists rooms text;
+alter table public.leads add column if not exists preferred_contact text;
+alter table public.leads add column if not exists timeline text;
 
 comment on table public.leads is 'Enquiries from the gorkhayai.com contact form. Tick contacted after replying.';
 
