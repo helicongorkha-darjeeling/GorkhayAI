@@ -1,7 +1,10 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TiltCard } from "@/components/ui/TiltCard";
+import { PickService } from "@/components/ui/PickService";
+import type { Interest } from "@/lib/leadOptions";
+import { formatINR, pricing, startingPrice } from "@/lib/pricing";
 
-const services = [
+const services: { name: Interest; body: string; points: string[]; icon: React.ReactNode }[] = [
   {
     name: "Website",
     body: "A fast, beautiful site that shows your rooms, views and food, ranks on Google and turns visitors into enquiries.",
@@ -65,14 +68,31 @@ export function Services() {
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-auto border-t border-white/10 pt-5 text-sm text-haze">
-                    Starting from <span className="text-lg font-semibold text-snow">₹____</span>
-                  </p>
+                  <div className="mt-auto border-t border-white/10 pt-5">
+                    <p className="text-sm text-haze">Starting from</p>
+                    <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
+                      <span className="font-display text-3xl text-snow">{startingPrice(pricing[s.name])}</span>
+                      <span className="text-sm text-haze">{pricing[s.name].unit}</span>
+                    </p>
+                    {pricing[s.name].upfront > 0 && pricing[s.name].monthly ? (
+                      <p className="mt-1 text-sm text-mist">then {formatINR(pricing[s.name].monthly!)}/month</p>
+                    ) : null}
+                    <PickService
+                      service={s.name}
+                      className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ember transition-colors hover:text-ember-soft"
+                    >
+                      Get started <span aria-hidden="true">→</span>
+                      <span className="sr-only">with {s.name}</span>
+                    </PickService>
+                  </div>
                 </article>
               </TiltCard>
             </li>
           ))}
         </ul>
+        <p className="reveal mt-8 max-w-3xl text-sm leading-relaxed text-haze">
+          Prices exclude GST. WhatsApp message fees charged by Meta are passed on at cost. Taking more than one service? We quote it as one package after a free call.
+        </p>
       </div>
     </section>
   );
