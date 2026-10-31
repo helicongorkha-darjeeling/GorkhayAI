@@ -21,6 +21,8 @@ export async function generateMetadata(props: PageProps<"/insights/[slug]">): Pr
     alternates: { canonical: `/insights/${post.slug}` },
     openGraph: {
       type: "article",
+      siteName: site.name,
+      locale: "en_IN",
       title: post.title,
       description: post.description,
       publishedTime: post.date.toISOString(),

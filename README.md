@@ -20,13 +20,13 @@ npm run dev
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata, sitemap and OG images. Defaults to `https://gorkhayai.com`. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata, sitemap and OG images. Defaults to `https://www.gorkhayai.com` (the apex redirects there). |
 | `SUPABASE_URL` | GorkhayAI Supabase project URL. |
 | `SUPABASE_ANON_KEY` | Publishable / anon key. Row Level Security only lets it insert leads. |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Digits with country code, e.g. `919800000000`. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Shown on the email button. Defaults to `ceo@gorkhayai.com`. |
 
-Until the Supabase variables are set, the form returns a friendly "please WhatsApp or email us" message instead of saving.
+Until the Supabase variables are set, the form returns a friendly message asking the visitor to email (or WhatsApp, once a number is set) instead of saving.
 
 ## Leads table
 

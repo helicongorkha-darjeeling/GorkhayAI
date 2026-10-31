@@ -28,8 +28,9 @@ export async function POST(request: Request) {
   const key = process.env.SUPABASE_ANON_KEY;
   if (!url || !key) {
     console.error("Lead not saved: SUPABASE_URL / SUPABASE_ANON_KEY are not set");
+    const via = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ? "WhatsApp or email" : "email";
     return NextResponse.json(
-      { ok: false, error: "Our form is being set up. Please message us on WhatsApp or email instead." },
+      { ok: false, error: `Our form is being set up. Please message us by ${via} instead.` },
       { status: 503 },
     );
   }
@@ -38,8 +39,9 @@ export async function POST(request: Request) {
   const { error } = await supabase.from("leads").insert({ ...lead, source: "website" });
   if (error) {
     console.error("Lead insert failed", error.message);
+    const via = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ? "WhatsApp" : "email";
     return NextResponse.json(
-      { ok: false, error: "Something went wrong. Please try again, or message us on WhatsApp." },
+      { ok: false, error: `Something went wrong. Please try again, or message us by ${via}.` },
       { status: 500 },
     );
   }
