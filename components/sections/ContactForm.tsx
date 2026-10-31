@@ -405,6 +405,7 @@ export function ContactForm() {
     const mail = `mailto:${site.email}?subject=${encodeURIComponent(
       `Enquiry from ${draft.property_name || draft.name}`,
     )}&body=${encodeURIComponent(text)}`;
+    const whatsapp = whatsappLink(text);
     return (
       <motion.div
         initial={{ opacity: 0, y: 16 }}
@@ -517,9 +518,9 @@ export function ContactForm() {
               <a href={mail} className="btn btn-primary">
                 Send by email
               </a>
-              {site.whatsapp && (
+              {whatsapp && (
                 <a
-                  href={whatsappLink(text)}
+                  href={whatsapp}
                   target="_blank"
                   rel="noopener"
                   className="btn btn-ghost"

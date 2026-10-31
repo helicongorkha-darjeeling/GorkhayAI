@@ -36,18 +36,17 @@ export const metadata: Metadata = {
     "GorkhayAI",
   ],
   alternates: { canonical: "/" },
+  // Title, description and image are filled from each page (and its opengraph-image).
+  // A fixed url of "/" would make every child page share the homepage graph URL.
+  // "./" resolves against the page being rendered.
   openGraph: {
     type: "website",
     siteName: site.name,
     locale: "en_IN",
-    url: "/",
-    title: site.title,
-    description: site.description,
+    url: "./",
   },
   twitter: {
     card: "summary_large_image",
-    title: site.title,
-    description: site.description,
   },
   robots: { index: true, follow: true },
 };
