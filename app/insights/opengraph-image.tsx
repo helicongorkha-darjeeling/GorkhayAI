@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { OgCard, ogSize } from "@/components/og/OgCard";
 
-export const alt = "GorkhayAI: AI that brings guests to your door";
+export const alt = "Notes from the front desk · GorkhayAI";
 export const size = ogSize;
 export const contentType = "image/png";
 
@@ -9,9 +9,9 @@ export default function Image() {
   return new ImageResponse(
     (
       <OgCard
-        eyebrow="AI studio · Darjeeling"
-        title="AI that brings guests to your door."
-        subtitle="Websites, booking bots and lead systems for hotels and homestays."
+        eyebrow="Insights"
+        title="Notes from the front desk"
+        subtitle="Practical guides and honest tool reviews for hotel and homestay owners."
       />
     ),
     size,

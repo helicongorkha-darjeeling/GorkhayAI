@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useId, useState } from "react";
 import { interests, propertyTypes } from "@/lib/leadOptions";
+import { site } from "@/lib/site";
 
 type Status = { state: "idle" | "sending" | "sent" } | { state: "error"; message: string };
 
@@ -47,7 +48,12 @@ export function ContactForm() {
       form.reset();
       setStatus({ state: "sent" });
     } catch {
-      setStatus({ state: "error", message: "Network error. Please try again, or message us on WhatsApp." });
+      setStatus({
+        state: "error",
+        message: site.whatsapp
+          ? "Network error. Please try again, or message us on WhatsApp."
+          : "Network error. Please try again, or email us.",
+      });
     }
   }
 
