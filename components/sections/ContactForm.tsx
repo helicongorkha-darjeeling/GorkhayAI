@@ -5,6 +5,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { PICK_SERVICE_EVENT } from "@/components/ui/PickService";
 import {
   contactMethods,
+  countsRooms,
   interests,
   propertyTypes,
   roomRanges,
@@ -12,7 +13,7 @@ import {
   type Interest,
   type PropertyType,
 } from "@/lib/leadOptions";
-import { estimate, formatINR, pricing, startingPrice } from "@/lib/pricing";
+import { estimate, formatINR, optionPrice } from "@/lib/pricing";
 import { site, whatsappLink } from "@/lib/site";
 import { useReducedMotion } from "@/lib/useCan3D";
 
@@ -78,6 +79,14 @@ const propertyCards: Record<
   resort: {
     label: "Resort",
     icon: <path d="M2 20l6-9 4 5 3-4 7 8zM16 6a2 2 0 100-4 2 2 0 000 4z" />,
+  },
+  restaurant: {
+    label: "Restaurant",
+    icon: <path d="M6 3v8a2 2 0 004 0V3M8 3v18M16 3c2.2 2 3 4.2 3 7s-.8 5-3 7v4" />,
+  },
+  travel_agency: {
+    label: "Travel agency",
+    icon: <path d="M12 21s7-5.2 7-11a7 7 0 10-14 0c0 5.8 7 11 7 11zM12 11a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />,
   },
   other: {
     label: "Something else",
@@ -145,14 +154,33 @@ function Check({ on }: { on: boolean }) {
   );
 }
 
-function Estimate({ selected }: { selected: Interest[] }) {
-  const { upfront, monthly } = estimate(selected);
+function Estimate({
+  selected,
+  property,
+}: {
+  selected: Interest[];
+  property: PropertyType | null;
+}) {
+  const { upfront, monthly } = estimate(selected, property);
+  const forWhom =
+    property && property !== "other"
+      ? `For a ${propertyCards[property].label.toLowerCase()}. `
+      : property === "other"
+        ? "Lowest starting prices. "
+        : "";
   return (
     <div
       className="flex items-center justify-between gap-4 rounded-2xl border border-ember/25 bg-ember/[0.07] px-4 py-3"
       aria-live="polite"
     >
-      <span className="text-sm text-mist">Estimated starting budget</span>
+      <span className="text-sm text-mist">
+        Estimated starting budget
+        {forWhom ? (
+          <span className="mt-0.5 block text-xs text-haze">
+            {forWhom}We quote the package on the call.
+          </span>
+        ) : null}
+      </span>
       <span className="text-right font-semibold text-snow">
         {selected.length === 0 ? (
           <span className="font-normal text-haze">Pick a service</span>
@@ -455,7 +483,7 @@ export function ContactForm() {
           ))}
           {draft.interest.length > 0 && (
             <div className="sm:col-span-2">
-              <Estimate selected={draft.interest} />
+              <Estimate selected={draft.interest} property={draft.property_type} />
             </div>
           )}
         </dl>
@@ -591,7 +619,10 @@ export function ContactForm() {
                           name="property_type"
                           value={t}
                           checked={on}
-                          onChange={() => set("property_type", t)}
+                          onChange={() => {
+                            set("property_type", t);
+                            if (!countsRooms(t)) set("rooms", null);
+                          }}
                           className="peer sr-only"
                         />
                         <span className="flex h-full flex-col gap-4 rounded-2xl border border-white/12 bg-white/[0.02] p-4 transition-all hover:border-white/30 peer-checked:border-ember peer-checked:bg-ember/10 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ember">
@@ -624,6 +655,7 @@ export function ContactForm() {
                   })}
                 </div>
 
+                {countsRooms(draft.property_type) && (
                 <fieldset>
                   <legend className="text-sm font-medium">
                     How many rooms?
@@ -643,6 +675,7 @@ export function ContactForm() {
                     ))}
                   </div>
                 </fieldset>
+                )}
 
                 <div>
                   <label
@@ -669,7 +702,6 @@ export function ContactForm() {
                 <div className="grid gap-3 sm:grid-cols-2">
                   {interests.map((i) => {
                     const on = draft.interest.includes(i);
-                    const p = pricing[i];
                     return (
                       <label key={i} className="relative cursor-pointer">
                         <input
@@ -687,10 +719,7 @@ export function ContactForm() {
                               {i}
                             </span>
                             <span className="mt-1 block text-sm text-haze">
-                              from {startingPrice(p)} {p.unit}
-                              {p.upfront > 0 && p.monthly
-                                ? ` + ${formatINR(p.monthly)}/mo`
-                                : ""}
+                              {optionPrice(i, draft.property_type)}
                             </span>
                           </span>
                         </span>
@@ -698,7 +727,7 @@ export function ContactForm() {
                     );
                   })}
                 </div>
-                <Estimate selected={draft.interest} />
+                <Estimate selected={draft.interest} property={draft.property_type} />
                 <fieldset>
                   <legend className="text-sm font-medium">
                     When would you like to start?

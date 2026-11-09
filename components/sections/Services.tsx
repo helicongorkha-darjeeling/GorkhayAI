@@ -2,7 +2,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { PickService } from "@/components/ui/PickService";
 import type { Interest } from "@/lib/leadOptions";
-import { formatINR, pricing, startingPrice } from "@/lib/pricing";
+import { cardMonthlyLine, cardPrice, cardRange, startingPrice } from "@/lib/pricing";
 
 const services: { name: Interest; body: string; points: string[]; icon: React.ReactNode }[] = [
   {
@@ -19,7 +19,7 @@ const services: { name: Interest; body: string; points: string[]; icon: React.Re
   },
   {
     name: "Monthly Management",
-    body: "We keep everything running: updates, seasonal offers, bot tuning and a monthly report on your leads.",
+    body: "Website upkeep, or full management of hosting, your Google Business Profile, leads and payments.",
     points: ["Content and rate updates", "Bot and lead monitoring", "Monthly lead report"],
     icon: <path d="M4 19V9M10 19V5M16 19v-7M22 19H2" />,
   },
@@ -44,51 +44,55 @@ export function Services() {
         />
 
         <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s, i) => (
-            <li key={s.name} className="reveal h-full">
-              <TiltCard className="h-full rounded-3xl">
-                <article className="glass flex h-full flex-col rounded-3xl p-6 transition-colors duration-300 hover:border-ember/40" style={{ transform: "translateZ(30px)" }}>
-                  <div className="flex items-center justify-between">
-                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-ember/12 text-ember">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        {s.icon}
-                      </svg>
-                    </span>
-                    <span className="font-display text-3xl text-navy-600" aria-hidden="true">
-                      0{i + 1}
-                    </span>
-                  </div>
-                  <h3 className="mt-6 text-xl font-semibold">{s.name}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-mist">{s.body}</p>
-                  <ul className="mb-6 mt-5 space-y-2 text-sm text-mist">
-                    {s.points.map((p) => (
-                      <li key={p} className="flex gap-2">
-                        <span aria-hidden="true" className="text-ember">·</span>
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto border-t border-white/10 pt-5">
-                    <p className="text-sm text-haze">Starting from</p>
-                    <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
-                      <span className="font-display text-3xl text-snow">{startingPrice(pricing[s.name])}</span>
-                      <span className="text-sm text-haze">{pricing[s.name].unit}</span>
-                    </p>
-                    {pricing[s.name].upfront > 0 && pricing[s.name].monthly ? (
-                      <p className="mt-1 text-sm text-mist">then {formatINR(pricing[s.name].monthly!)}/month</p>
-                    ) : null}
-                    <PickService
-                      service={s.name}
-                      className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ember transition-colors hover:text-ember-soft"
-                    >
-                      Get started <span aria-hidden="true">→</span>
-                      <span className="sr-only">with {s.name}</span>
-                    </PickService>
-                  </div>
-                </article>
-              </TiltCard>
-            </li>
-          ))}
+          {services.map((s, i) => {
+            const price = cardPrice(s.name);
+            const monthly = cardMonthlyLine(s.name);
+            const range = cardRange(s.name);
+            return (
+              <li key={s.name} className="reveal h-full">
+                <TiltCard className="h-full rounded-3xl">
+                  <article className="glass flex h-full flex-col rounded-3xl p-6 transition-colors duration-300 hover:border-ember/40" style={{ transform: "translateZ(30px)" }}>
+                    <div className="flex items-center justify-between">
+                      <span className="grid h-12 w-12 place-items-center rounded-2xl bg-ember/12 text-ember">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          {s.icon}
+                        </svg>
+                      </span>
+                      <span className="font-display text-3xl text-navy-600" aria-hidden="true">
+                        0{i + 1}
+                      </span>
+                    </div>
+                    <h3 className="mt-6 text-xl font-semibold">{s.name}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-mist">{s.body}</p>
+                    <ul className="mb-6 mt-5 space-y-2 text-sm text-mist">
+                      {s.points.map((p) => (
+                        <li key={p} className="flex gap-2">
+                          <span aria-hidden="true" className="text-ember">·</span>
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-auto border-t border-white/10 pt-5">
+                      <p className="text-sm text-haze">Starting from</p>
+                      <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
+                        <span className="font-display text-3xl text-snow">{startingPrice(price)}</span>
+                        <span className="text-sm text-haze">{price.unit}</span>
+                      </p>
+                      {monthly ? <p className="mt-1 text-sm text-mist">{monthly}</p> : null}
+                      {range ? <p className="mt-2 text-xs leading-relaxed text-haze">{range}</p> : null}
+                      <PickService
+                        service={s.name}
+                        className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ember transition-colors hover:text-ember-soft"
+                      >
+                        Get started <span aria-hidden="true">→</span>
+                        <span className="sr-only">with {s.name}</span>
+                      </PickService>
+                    </div>
+                  </article>
+                </TiltCard>
+              </li>
+            );
+          })}
         </ul>
         <p className="reveal mt-8 max-w-3xl text-sm leading-relaxed text-haze">
           Prices exclude GST. WhatsApp message fees charged by Meta are passed on at cost. Taking more than one service? We quote it as one package after a free call.

@@ -2,8 +2,13 @@
 export const interests = ["Website", "AI Booking Bot", "Monthly Management", "Training"] as const;
 export type Interest = (typeof interests)[number];
 
-export const propertyTypes = ["hotel", "homestay", "resort", "other"] as const;
+export const propertyTypes = ["hotel", "homestay", "resort", "restaurant", "travel_agency", "other"] as const;
 export type PropertyType = (typeof propertyTypes)[number];
+
+/** Restaurants and travel agencies are not asked for a room count. */
+export function countsRooms(type: PropertyType | null) {
+  return type !== "restaurant" && type !== "travel_agency";
+}
 
 export const roomRanges = ["1–5", "6–15", "16–40", "40+"] as const;
 export const contactMethods = ["WhatsApp", "Phone call", "Email"] as const;

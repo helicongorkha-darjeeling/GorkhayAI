@@ -30,7 +30,7 @@ Until the Supabase variables are set, the form still works: after the last step 
 
 ## Leads table
 
-Run `supabase/migrations/20261024000000_create_leads.sql` in the GorkhayAI Supabase project (SQL editor or `supabase db push`). It creates `public.leads` with insert-only access for the website key. Read leads in the Supabase dashboard and tick `contacted` after replying.
+Run the SQL files in `supabase/migrations/` in the GorkhayAI Supabase project (SQL editor or `supabase db push`). They create `public.leads` with insert-only access for the website key. Read leads in the Supabase dashboard and tick `contacted` after replying. If the table already exists, also run `20261109000000_property_type_tiers.sql` so restaurant and travel-agency enquiries are accepted.
 
 ## Writing insights
 
@@ -60,6 +60,6 @@ Posts appear on the home page grid, `/insights`, the sitemap, and get their own 
 
 ## Placeholders to fill before launch
 
-- Prices live in `lib/pricing.ts` (cards, the form's budget estimate and everything else read from there). They exclude GST.
+- Starting prices live in `lib/pricing.ts` (cards and the form's budget estimate read from there, and the estimate follows the property type). They exclude GST.
 - WhatsApp number and contact email (env vars above). WhatsApp buttons stay hidden until `NEXT_PUBLIC_WHATSAPP_NUMBER` is set.
 - Founder photo in `components/sections/About.tsx`
