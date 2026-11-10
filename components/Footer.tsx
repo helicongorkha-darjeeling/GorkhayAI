@@ -34,6 +34,12 @@ export function Footer() {
                 {site.email}
               </a>
             </li>
+            <li>
+              <a href={site.portfolioUrl} target="_blank" rel="noopener" className="hover:text-snow">
+                Portfolio
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
           </ul>
         </nav>
       </div>

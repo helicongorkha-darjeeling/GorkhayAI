@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { site } from "@/lib/site";
 
 const shipLog = [
   { name: "Hills Tour and Travels", kind: "Tourism" },
@@ -39,6 +40,18 @@ export function About() {
             <div className="absolute inset-x-0 bottom-0 p-8">
               <p className="text-xs uppercase tracking-[0.22em] text-haze">Founder</p>
               <p className="mt-1 font-display text-2xl text-snow">Upesh Bishwakarma</p>
+              <a
+                href={site.portfolioUrl}
+                target="_blank"
+                rel="noopener"
+                className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ember transition-colors hover:text-ember-soft"
+              >
+                Portfolio
+                <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M5 11L11 5M6 5h5v5" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+                </svg>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
             </div>
           </div>
           <figcaption className="sr-only">Upesh Bishwakarma, founder of GorkhayAI</figcaption>

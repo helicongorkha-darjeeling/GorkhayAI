@@ -20,17 +20,17 @@ npm run dev
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata, sitemap and OG images. Defaults to `https://gorkhayai.com`. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata, sitemap and OG images. Defaults to `https://www.gorkhayai.com` (the apex redirects there). |
 | `SUPABASE_URL` | GorkhayAI Supabase project URL. |
 | `SUPABASE_ANON_KEY` | Publishable / anon key. Row Level Security only lets it insert leads. |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Digits with country code, e.g. `919800000000`. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Shown on the email button. Defaults to `ceo@gorkhayai.com`. |
 
-Until the Supabase variables are set, the form returns a friendly "please WhatsApp or email us" message instead of saving.
+Until the Supabase variables are set, the form still works: after the last step it hands the visitor a ready-written email (and WhatsApp message, once the number is set) with everything they entered, so no enquiry is lost.
 
 ## Leads table
 
-Run `supabase/migrations/20261024000000_create_leads.sql` in the GorkhayAI Supabase project (SQL editor or `supabase db push`). It creates `public.leads` with insert-only access for the website key. Read leads in the Supabase dashboard and tick `contacted` after replying.
+Run the SQL files in `supabase/migrations/` in the GorkhayAI Supabase project (SQL editor or `supabase db push`). They create `public.leads` with insert-only access for the website key. Read leads in the Supabase dashboard and tick `contacted` after replying. If the table already exists, also run `20261109000000_property_type_tiers.sql` so restaurant and travel-agency enquiries are accepted.
 
 ## Writing insights
 
@@ -60,6 +60,6 @@ Posts appear on the home page grid, `/insights`, the sitemap, and get their own 
 
 ## Placeholders to fill before launch
 
-- Prices: `Starting from ₹____` in `components/sections/Services.tsx`
-- WhatsApp number and contact email (env vars above)
+- Starting prices live in `lib/pricing.ts` (cards and the form's budget estimate read from there, and the estimate follows the property type). They exclude GST.
+- WhatsApp number and contact email (env vars above). WhatsApp buttons stay hidden until `NEXT_PUBLIC_WHATSAPP_NUMBER` is set.
 - Founder photo in `components/sections/About.tsx`
