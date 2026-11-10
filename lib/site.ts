@@ -10,6 +10,7 @@ export const site = {
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "ceo@gorkhayai.com",
   caseStudyUrl: "https://mainalihospitality.com",
+  portfolioUrl: "https://portfolio-next-fawn-five.vercel.app",
 } as const;
 
 export const nav = [

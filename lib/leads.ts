@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { interests, propertyTypes } from "./leadOptions";
+import { contactMethods, interests, propertyTypes, roomRanges, timelines } from "./leadOptions";
 
 const optionalText = (max: number) =>
   z
@@ -18,6 +18,9 @@ export const leadSchema = z
     property_name: optionalText(160),
     property_type: z.enum(propertyTypes).nullable().optional(),
     interest: z.array(z.enum(interests)).max(4).default([]),
+    rooms: z.enum(roomRanges).nullable().optional(),
+    preferred_contact: z.enum(contactMethods).nullable().optional(),
+    timeline: z.enum(timelines).nullable().optional(),
     message: optionalText(2000),
     // Honeypot: real people never fill this in.
     company_website: z.string().max(500).optional(),

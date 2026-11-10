@@ -65,7 +65,7 @@ const jsonLd = {
   name: site.name,
   url: site.url,
   description: site.description,
-  founder: { "@type": "Person", name: site.founder },
+  founder: { "@type": "Person", name: site.founder, url: site.portfolioUrl },
   areaServed: "IN",
   address: {
     "@type": "PostalAddress",
